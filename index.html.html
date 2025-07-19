@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pastel Clay Rings & Flower Jewelry Trays</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: #fff8f9;
+      color: #5a4d4d;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #ffd6e8;
+      padding: 20px 10%;
+      text-align: center;
+      border-bottom: 2px solid #f5a1c2;
+      position: relative;
+    }
+
+    header h1 {
+      margin: 0;
+      font-weight: 700;
+      color: #d05a82;
+      font-size: 2.8rem;
+      letter-spacing: 1.5px;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      color: #a94c70;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 0 15px;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #6a3246;
+    }
+
+    /* Cart button */
+    #cart-btn {
+      position: absolute;
+      top: 20px;
+      right: 10%;
+      background: #d05a82;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      color: white;
+      font-weight: 700;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(208, 90, 130, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+      user-select: none;
+    }
+
+    #cart-btn:hover {
+      background: #a94065;
+    }
+
+    /* Cart sidebar */
+    #cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: -350px;
+      width: 350px;
+      height: 100vh;
+      background: #fff0f6;
+      box-shadow: -5px 0 15px rgba(209, 90, 130, 0.4);
+      border-left: 3px solid #d05a82;
+      padding: 30px 20px;
+      transition: right 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #cart-sidebar.open {
+      right: 0;
+    }
+
+    #cart-sidebar h2 {
+      color: #bf5174;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #cart-items {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin-bottom: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #f7a1c0;
+      padding-bottom: 10px;
+    }
+
+    .cart-item img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-right: 10px;
+      box-shadow: 0 3px 6px rgba(255, 182, 193, 0.4);
+    }
+
+    .cart-item-details {
+      flex-grow: 1;
+    }
+
+    .cart-item-details h4 {
+      margin: 0 0 5px;
+      font-size: 1rem;
+      color: #8c5c73;
+    }
+
+    .cart-item-details span {
+      font-size: 0.9rem;
+      color: #a65a7c;
+    }
+
+    .cart-item-remove {
+      cursor: pointer;
+      color: #d05a82;
+      font-weight: 700;
+      font-size: 1.2rem;
+      user-select: none;
+      padding-left: 10px;
+      transition: color 0.2s ease;
+    }
+
+    .cart-item-remove:hover {
+      color: #a94065;
+    }
+
+    #cart-total {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #d05a82;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    #clear-cart {
+      background: #f7a1c0;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-weight: 700;
+      padding: 10px 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      user-select: none;
+      margin: 0 auto;
+      display: block;
+    }
+
+    #clear-cart:hover {
+      background: #d05980;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 50px;
+      color: #7f5a6f;
+    }
+
+    .intro h2 {
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .intro p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .product-card {
+      background: #fff0f6;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 6px 12px rgba(209, 90, 130, 0.2);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(209, 90, 130, 0.35);
+    }
+
+    .product-card img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(255, 182, 193, 0.4);
+    }
+
+    .product-card h3 {
+      margin: 10px 0 5px;
+      font-size: 1.4rem;
+      color: #bf5174;
+    }
+
+    .product-card p {
+      color: #8c5c73;
+      font-size: 1rem;
+      margin-bottom: 15px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .price {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #d05a82;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      background: #f7a1c0;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-weight: 700;
+      padding: 10px 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      user-select: none;
+    }
+
+    .btn:hover {
+      background: #d05980;
+    }
+
+    footer {
+      background: #ffd6e8;
+      text-align: center;
+      padding: 20px 10%;
+      margin-top: 60px;
+      font-size: 0.9rem;
+      color: #a94c70;
+      border-top: 2px solid #f5a1c2;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .product-card img {
+        width: 140px;
+        height: 140px;
+      }
+
+      #cart-sidebar {
+        width: 100%;
+      }
+
+      #cart-btn {
+        right: 15px;
+        top: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SweetPastel Creations</h1>
+    <nav>
+      <a href="#rings">Clay Rings</a>
+      <a href="#trays">Flower Trays</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button id="cart-btn" aria-label="Open shopping cart">🛒</button>
+  </header>
+
+  <aside id="cart-sidebar" aria-label="Shopping cart">
+    <h2>Your Cart</h2>
+    <div id="cart-items">
+      <p>Your cart is empty 💕</p>
+    </div>
+    <div id="cart-total"></div>
+    <button id="clear-cart" style="display:none;">Clear Cart</button>
+  </aside>
+
+  <main>
+    <section class="intro">
+      <h2>Adorable Pastel Clay Rings & Flower Jewelry Trays</h2>
+      <p>Discover charming, handcrafted pastel clay rings and delicate flower-inspired jewelry trays that add a pop of color and cuteness to your everyday style. Perfect for gifting or treating yourself!</p>
+    </section>
+
+    <section id="rings" class="products">
+      <div class="product-card" data-id="pink-ring" data-name="Pink Pastel Clay Ring" data-price="18.00" data-img="https://images.unsplash.com/photo-1512427691650-219adbb81a88?auto=format&fit=crop&w=400&q=80">
+        <img src="https://images.unsplash.com/photo-1512427691650-219adbb81a88?auto=format&fit=crop&w=400&q=80" alt="Pastel Clay Ring - Pink" />
+        <h3>Pink Pastel Clay Ring</h3>
+        <p>Soft pink handmade clay ring with a dainty flower accent.</p>
+        <div class="price">$18.00</div>
+        <button class="btn add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-id="mint-ring" data-name="Mint Green Clay Ring" data-price="18.00" data-img="https://images.unsplash.com/photo-1533840062072-6f877e6377e9?auto=format&fit=crop&w=400&q=80">
+        <img src="https://images.unsplash.com/photo-1533840062072-6f877e6377e9?auto=format&fit=crop&w=400&q=80" alt="Mint Clay Ring" />
+        <h3>Mint Green Clay Ring</h3>
+        <p>Fresh mint pastel ring that brightens your look.</p>
+        <div class="price">$18.00</div>
+        <button class="btn add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-id="lavender-ring" data-name="Lavender Clay Ring" data-price="18.00" data-img="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=400&q=80">
+        <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=400&q=80" alt="Lavender Clay Ring" />
+        <h3>Lavender Clay Ring</h3>
+        <p>Delicate lavender ring perfect for spring vibes.</p>
+        <div class="price">$18.00</div>
+        <button class="btn add-to-cart-btn">Add to Cart</button>
+      </div>
+    </section>
+
+    <section id="trays" class="products" style="margin-top: 60px;">
+      <div class="product-card" data-id="pink-tray" data-name="Pink Flower Jewelry Tray" data-price="25.00" data-img="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=400&q=80">
+        <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=400&q=80" alt="Flower Jewelry Tray - Pink" />
+        <h3>Pink Flower Jewelry Tray</h3>
+        <p>Pastel pink tray with dainty flower petals, perfect for rings and earrings.</p>
+        <div class="price">$25.00</div>
+        <button class="btn add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-id="lavender-tray" data-name="Lavender Flower Jewelry Tray" data-price="25.00" data-img="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80" alt="Lavender Flower Jewelry Tray" />
+        <h3>Lavender Flower Jewelry Tray</h3>
+        <p>Soft lavender tray inspired by blooming flowers.</p>
+        <div class="price">$25.00</div>
+        <button class="btn add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-id="mint-tray" data-name="Mint Flower Jewelry Tray" data-price="25.00" data-img="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=400&q=80">
+        <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=400&q=80" alt="Mint Flower Jewelry Tray" />
+        <h3>Mint Flower Jewelry Tray</h3>
+        <p>Fresh mint green floral tray to brighten your vanity.</p>
+        <div class="price">$25.00</div>
+        <button class="btn add-to-cart-btn">Add to Cart</button>
+      </div>
+    </section>
+
+    <section id="contact" style="text-align:center; margin-top: 80px;">
+      <h2>Get in Touch</h2>
+      <p>Questions? Orders? Reach out and we’ll get back to you soon!</p>
+      <a href="mailto:sweetpastel@example.com" class="btn" style="margin-top: 10px;">Email Us</a>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 SweetPastel Creations | Handcrafted with love 💕
+  </footer>
+
+  <script>
+    const cartBtn = document.getElementById('cart-btn');
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    const clearCartBtn = document.getElementById('clear-cart');
+
+    // Cart data: { id: { name, price, img, quantity } }
+    let cart = {};
+
+    function saveCart() {
+      localStorage.setItem('sweetPastelCart', JSON.stringify(cart));
+    }
+
+    function loadCart() {
+      const storedCart = localStorage.getItem('sweetPastelCart');
+      if (storedCart) {
+        cart = JSON.parse(storedCart);
+      }
+    }
+
+    function updateCartUI() {
+      cartItemsContainer.innerHTML = '';
+      const items = Object.values(cart);
+      if (items.length === 0) {
+        cartItemsContainer.innerHTML = '<p>Your cart is empty 💕</p>';
+        cartTotal.textContent = '';
+        clearCartBtn.style.display = 'none';
+        return;
+      }
+
+      clearCartBtn.style.display = 'block';
+
+      items.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'cart-item';
+
+        const img = document.createElement('img');
+        img.src = item.img;
+        img.alt = item.name;
+
+        const details = document.createElement('div');
+        details.className = 'cart-item-details';
+
+        const name = document.createElement('h4');
+        name.textContent = item.name;
+
+        const qtyPrice = document.createElement('span');
+        qtyPrice.textContent = `Qty: ${item.quantity} × $${item.price}`;
+
+        details.appendChild(name);
+        details.appendChild(qtyPrice);
+
+        const removeBtn = document.createElement('span');
+        removeBtn.className = 'cart-item-remove';
+        removeBtn.textContent = '✕';
+        removeBtn.title = 'Remove item';
+        removeBtn.addEventListener('click', () => {
+          removeFromCart(item.id);
+        });
+
+        itemDiv.appendChild(img);
+        itemDiv.appendChild(details);
+        itemDiv.appendChild(removeBtn);
+
+        cartItemsContainer.appendChild(itemDiv);
+      });
+
+      const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    function addToCart(id, name, price, img) {
+      if (cart[id]) {
+        cart[id].quantity += 1;
+      } else {
+        cart[id] = { id, name, price: parseFloat(price), img, quantity: 1 };
+      }
+      saveCart();
+      updateCartUI();
+      openCart();
+    }
+
+    function removeFromCart(id) {
+      delete cart[id];
+      saveCart();
+      updateCartUI();
+    }
+
+    function clearCart() {
+      cart = {};
+      saveCart();
+      updateCartUI();
+    }
+
+    function openCart() {
+      cartSidebar.classList.add('open');
+    }
+
+    function closeCart() {
+      cartSidebar.classList.remove('open');
+    }
+
+    cartBtn.addEventListener('click', () => {
+      if (cartSidebar.classList.contains('open')) {
+        closeCart();
+      } else {
+        openCart();
+      }
+    });
+
+    clearCartBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear the cart?')) {
+        clearCart();
+      }
+    });
+
+    // Close cart when clicking outside sidebar on small screens
+    window.addEventListener('click', e => {
+      if (
+        cartSidebar.classList.contains('open') &&
+        !cartSidebar.contains(e.target) &&
+        e.target !== cartBtn
+      ) {
+        closeCart();
+      }
+    });
+
+    // Add to cart buttons
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+    addToCartButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const card = e.target.closest('.product-card');
+        const id = card.dataset.id;
+        const name = card.dataset.name; 
+        const price = card.dataset.price;
+        const img = card.dataset.img;
+        addToCart(id, name, price, img);
+      });
+    });
+
+    // Load saved cart on page load
+    loadCart();
+    updateCartUI();
+  </script>
+</body>
+</html>
